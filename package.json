@@ -1,0 +1,33 @@
+{
+  "name": "grow-a-garden",
+  "version": "1.0.0",
+  "description": "AI-powered assistant to plan and manage your garden",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "build": "cd client && npm install && npm run build",
+    "heroku-postbuild": "npm run build",
+    "install-client": "cd client && npm install",
+    "client": "npm start --prefix client",
+    "server": "nodemon server/index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Carl Smith",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.18.2",
+    "openai": "^4.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌱 Grow a Garden</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f9f1;
+      color: #2c3e50;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #74c69d;
+      padding: 1rem 2rem;
+      text-align: center;
+      color: white;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    #weather {
+      background-color: #e0f7ef;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 6px;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌱 Grow a Garden</h1>
+    <p>Your AI-powered garden planner</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Check Your Local Weather 🌤️</h2>
+      <input type="text" id="cityInput" placeholder="Enter your city..." />
+      <button onclick="getWeather()">Get Weather</button>
+      <div id="weather"></div>
+    </section>
+
+    <section>
+      <h2>Plan Your Garden 🪴</h2>
+      <p>Use weather and season data to decide what to plant, when to water, and more.</p>
+      <!-- More interactive planning tools could go here -->
+    </section>
+  </main>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      if (!city) {
+        alert('Please enter a city name.');
+        return;
+      }
+
+      const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual API key
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('City not found');
+
+        const data = await response.json();
+        const weatherDiv = document.getElementById('weather');
+        weatherDiv.innerHTML = `
+          <h3>Weather in ${data.name}, ${data.sys.country}</h3>
+          <p>🌡️ Temperature: ${data.main.temp}°C</p>
+          <p>💧 Humidity: ${data.main.humidity}%</p>
+          <p>🌬️ Wind: ${data.wind.speed} m/s</p>
+          <p>🌤️ Condition: ${data.weather[0].description}</p>
+        `;
+      } catch (err) {
+        alert('Error fetching weather: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
